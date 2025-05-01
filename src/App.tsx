@@ -1,4 +1,6 @@
+import GameModal from './components/GameModal';
 import HangmanFigure from './components/HangmanFigure';
+import Keyboard from './components/Keyboard';
 import WordDisplay from './components/WordDisplay';
 
 export default function App() {
@@ -13,6 +15,8 @@ export default function App() {
         <p className='text-lg'>Tip: something to say</p>
       </div>
       <WordDisplay word='vercel' guessedLetters={new Set(['v', 'c', 'e'])} />
+      <Keyboard guessedLetters={new Set(['v', 'e', 'c', 'w'])} />
+      <GameModal gameStatus='lost' word='vercel' onNewWord={() => {}} />
     </div>
   );
 }
