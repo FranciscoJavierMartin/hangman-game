@@ -13,12 +13,17 @@ const KEY_CLASSES = {
 
 interface KeyboardProps {
   guessedLetters: Set<string>;
+  onGuessLetter: (letter: string) => void;
 }
 
-export default function Keyboard({ guessedLetters }: KeyboardProps) {
+export default function Keyboard({
+  guessedLetters,
+  onGuessLetter,
+}: KeyboardProps) {
   function handleKeyDown(event: KeyboardEvent) {
     const letter = event.key.toLowerCase();
     if (KEY_ROWS.flat().includes(letter)) {
+      onGuessLetter(letter);
     }
   }
 
@@ -40,6 +45,7 @@ export default function Keyboard({ guessedLetters }: KeyboardProps) {
               <button
                 disabled={isGuessed}
                 key={letter}
+                onClick={() => onGuessLetter(letter)}
                 className={`size-8 rounded bg-blue-100 uppercase text-white transition-colors hover:bg-pink focus:outline-none focus:ring-2 focus:ring-pink disabled:hover:bg-gray-100 sm:size-10 ${isGuessed ? KEY_CLASSES.guessed : KEY_CLASSES.unguessed}`}
               >
                 {letter}
