@@ -1,4 +1,14 @@
-export default function HangmanFigure() {
+import { motion } from 'motion/react';
+
+const GUESSES = 6;
+
+interface HangmanFigureProps {
+  remainingGuesses: number;
+}
+
+export default function HangmanFigure({
+  remainingGuesses,
+}: HangmanFigureProps) {
   const gallowsLines = [
     { x1: 40, y1: 180, x2: 160, y2: 180 },
     { x1: 60, y1: 20, x2: 60, y2: 180 },
@@ -17,9 +27,26 @@ export default function HangmanFigure() {
       {gallowsLines.map((line, index) => (
         <line key={index} {...line} className='stroke-gray-200 stroke-[4px]' />
       ))}
-      <circle cx='140' cy='60' r='10' className='stroke-pink stroke-[4px]' />
-      {bodyParts.map((part) => (
-        <line key={part.id} {...part} className='stroke-pink stroke-[4px]' />
+      <motion.circle
+        cx='140'
+        cy='60'
+        r='10'
+        className='stroke-pink stroke-[4px]'
+        initial={{ scale: 0 }}
+        animate={{ scale: GUESSES - remainingGuesses > 0 ? 1 : 0 }}
+        transition={{ duration: 0.5 }}
+      />
+      {bodyParts.map((part, index) => (
+        <motion.line
+          key={part.id}
+          {...part}
+          className='stroke-pink stroke-[4px]'
+          initial={{ pathLength: 0 }}
+          animate={{
+            pathLength: GUESSES - remainingGuesses > index + 1 ? 1 : 0,
+          }}
+          transition={{ duration: 0.5 }}
+        />
       ))}
     </svg>
   );
